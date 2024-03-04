@@ -9,13 +9,13 @@ export enum Genre {
     Crime = 'Crime',
 }
 
-interface GenreSelectorProps {
+interface GenreSelectProps {
     genres: Genre[];
     selectedGenre: Genre;
     onSelect: (genre: Genre) => void;
 }
 
-export default class GenreSelector extends Component<GenreSelectorProps> {
+export default class GenreSelect extends Component<GenreSelectProps> {
     render() {
         return (
             <div className="genre">
