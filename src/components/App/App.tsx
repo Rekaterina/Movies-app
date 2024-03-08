@@ -2,7 +2,7 @@ import React from 'react';
 import Counter from '../Counter/Counter';
 import './App.css';
 import SearchForm from '../SearchForm/SearchForm';
-import GenreSelector, { Genre } from '../GenreSelect/GenreSelect';
+import GenreSelect, { Genre } from '../GenreSelect/GenreSelect';
 
 interface AppState {
     query: string;
@@ -33,7 +33,7 @@ export default class App extends React.Component<{}, AppState> {
             <div className="app-wrapper">
                 <Counter initialValue={this.state.counter} />
                 <SearchForm initialQuery={this.state.query} onSearch={this.onSearch} />
-                <GenreSelector
+                <GenreSelect
                     genres={this.genre}
                     selectedGenre={this.state.selectedGenre}
                     onSelect={this.onSelectGenre}
