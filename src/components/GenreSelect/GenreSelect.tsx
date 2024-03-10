@@ -1,15 +1,8 @@
 import { Component } from 'react';
 import './GenreSelect.css';
+import { Genre } from '../../models';
 
-export enum Genre {
-    All = 'All',
-    Documentary = 'Documentary',
-    Comedy = 'Comedy',
-    Horror = 'Horror',
-    Crime = 'Crime',
-}
-
-interface GenreSelectProps {
+export interface GenreSelectProps {
     genres: Genre[];
     selectedGenre: Genre;
     onSelect: (genre: Genre) => void;

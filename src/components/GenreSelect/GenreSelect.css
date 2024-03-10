@@ -1,3 +1,5 @@
 .genre {
-    padding: 10px;
+    button {
+        text-transform: uppercase;
+    }
 }
