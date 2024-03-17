@@ -13,12 +13,6 @@ export default class MovieDetails extends Component<MovieDetailsProps> {
         return `${hours}h ${minutes}min`;
     }
 
-    getYear(mins: number) {
-        let hours = Math.floor(mins / 60);
-        let minutes = mins % 60;
-        return `${hours}h ${minutes}min`;
-    }
-
     render() {
         const { movie } = this.props;
 

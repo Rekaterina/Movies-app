@@ -7,6 +7,8 @@ import SortControl, { SortOption } from '../SortControl/SortControl';
 import { Genre, Movie } from '../../models';
 import MovieTile from '../MovieTile/MovieTile';
 import { movies } from '../../testData';
+import Dialog from '../Dialog/Dialog';
+import MovieForm from '../MovieForm/MovieForm';
 
 interface AppState {
     query: string;
@@ -15,6 +17,10 @@ interface AppState {
     selectedSorting: SortOption;
     selectedMovieId: number | null;
     movies: Movie[];
+    showModal: boolean;
+    isEditMovieModal: boolean;
+    isAddMovieModal: boolean;
+    isDeleteMovieModal: boolean;
 }
 
 export default class App extends React.Component<{}, AppState> {
@@ -29,6 +35,12 @@ export default class App extends React.Component<{}, AppState> {
             selectedSorting: SortOption.ReleaseDate,
             movies,
             selectedMovieId: null,
+            showModal: true,
+
+            // change isEditMovieModal/isAddMovieModal/isDeleteMovieModal to see use cases
+            isEditMovieModal: true,
+            isAddMovieModal: false,
+            isDeleteMovieModal: false,
         };
     }
 
@@ -52,13 +64,55 @@ export default class App extends React.Component<{}, AppState> {
         console.log('Selected movie id is ' + selectedMovieId);
     };
 
+    onFormSubmit = (movie: Movie) => {
+        console.log('Submitted movie id is ' + movie.title);
+    };
+
+    onCloseDialog = () => {
+        this.setState({ showModal: false });
+    };
+
     getSelectedMovieById = (movieId: number): Movie | undefined => {
         return this.state.movies.find(({ id }) => id === movieId);
     };
 
+    onDeleteMovie = () => {
+        console.log('Movie with id' + this.state.selectedMovieId + 'was deleted');
+    };
+
+    renderModal() {
+        if (!this.state.showModal) return null;
+        let dialogContent = null;
+        let dialogTitle = '';
+
+        if (this.state.isAddMovieModal) {
+            dialogContent = <MovieForm onSubmit={this.onFormSubmit} />;
+            dialogTitle = 'Add Movie';
+        } else if (this.state.isEditMovieModal) {
+            dialogContent = <MovieForm initialMovie={movies[0]} onSubmit={this.onFormSubmit} />;
+            dialogTitle = 'Edit Movie';
+        } else if (this.state.isDeleteMovieModal) {
+            dialogContent = (
+                <div className="delete-dialog">
+                    <div className="delete-movie-text">Are you sure you want to delete this movie?</div>
+                    <button className="delete-movie-btn" onClick={this.onDeleteMovie}>
+                        Confirm
+                    </button>
+                </div>
+            );
+            dialogTitle = 'Delete Movie';
+        }
+
+        return (
+            <div className="modal-container">
+                <Dialog title={dialogTitle} children={dialogContent} onCloseClick={this.onCloseDialog} />
+            </div>
+        );
+    }
+
     render() {
         return (
-            <div className="app-wrapper">
+            <div className={this.state.showModal ? 'app-wrapper blur' : 'app-wrapper'}>
                 {this.state.selectedMovieId ? (
                     <MovieDetails movie={this.getSelectedMovieById(this.state.selectedMovieId)} />
                 ) : (
@@ -81,6 +135,7 @@ export default class App extends React.Component<{}, AppState> {
                         ))}
                     </div>
                 </div>
+                {this.renderModal()}
             </div>
         );
     }
