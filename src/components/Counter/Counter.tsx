@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Counter.css';
 
-interface CounterProps {
+export interface CounterProps {
     initialValue?: number;
 }
 

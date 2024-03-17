@@ -1,7 +1,7 @@
 import React from 'react';
 import './SearchForm.css';
 
-interface SearchFormProps {
+export interface SearchFormProps {
     initialQuery: string;
     onSearch: (query: string) => void;
 }
