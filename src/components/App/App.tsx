@@ -4,11 +4,12 @@ import SearchForm from '../SearchForm/SearchForm';
 import GenreSelect from '../GenreSelect/GenreSelect';
 import MovieDetails from '../MovieDetails/MovieDetails';
 import SortControl, { SortOption } from '../SortControl/SortControl';
-import { Genre, Movie } from '../../models';
+import { Genre, ModalType, Movie } from '../../models';
 import MovieTile from '../MovieTile/MovieTile';
 import { movies } from '../../testData';
 import Dialog from '../Dialog/Dialog';
 import MovieForm from '../MovieForm/MovieForm';
+import { DIALOG_TITLE_MAP } from '../../constants';
 
 interface AppState {
     query: string;
@@ -18,9 +19,7 @@ interface AppState {
     selectedMovieId: number | null;
     movies: Movie[];
     showModal: boolean;
-    isEditMovieModal: boolean;
-    isAddMovieModal: boolean;
-    isDeleteMovieModal: boolean;
+    modalType: ModalType | string;
 }
 
 export default class App extends React.Component<{}, AppState> {
@@ -37,10 +36,8 @@ export default class App extends React.Component<{}, AppState> {
             selectedMovieId: null,
             showModal: true,
 
-            // change isEditMovieModal/isAddMovieModal/isDeleteMovieModal to see use cases
-            isEditMovieModal: true,
-            isAddMovieModal: false,
-            isDeleteMovieModal: false,
+            // change modalType to see use cases
+            modalType: ModalType.Edit,
         };
     }
 
@@ -85,22 +82,32 @@ export default class App extends React.Component<{}, AppState> {
         let dialogContent = null;
         let dialogTitle = '';
 
-        if (this.state.isAddMovieModal) {
-            dialogContent = <MovieForm onSubmit={this.onFormSubmit} />;
-            dialogTitle = 'Add Movie';
-        } else if (this.state.isEditMovieModal) {
-            dialogContent = <MovieForm initialMovie={movies[0]} onSubmit={this.onFormSubmit} />;
-            dialogTitle = 'Edit Movie';
-        } else if (this.state.isDeleteMovieModal) {
-            dialogContent = (
-                <div className="delete-dialog">
-                    <div className="delete-movie-text">Are you sure you want to delete this movie?</div>
-                    <button className="delete-movie-btn" onClick={this.onDeleteMovie}>
-                        Confirm
-                    </button>
-                </div>
-            );
-            dialogTitle = 'Delete Movie';
+        switch (this.state.modalType) {
+            case ModalType.Add:
+                dialogContent = <MovieForm onSubmit={this.onFormSubmit} />;
+                dialogTitle = DIALOG_TITLE_MAP[ModalType.Add];
+                break;
+
+            case ModalType.Edit:
+                dialogContent = <MovieForm initialMovie={movies[0]} onSubmit={this.onFormSubmit} />;
+                dialogTitle = DIALOG_TITLE_MAP[ModalType.Edit];
+                break;
+
+            case ModalType.Delete:
+                dialogContent = (
+                    <div className="delete-dialog">
+                        <div className="delete-movie-text">Are you sure you want to delete this movie?</div>
+                        <button className="delete-movie-btn" onClick={this.onDeleteMovie}>
+                            Confirm
+                        </button>
+                    </div>
+                );
+                dialogTitle = DIALOG_TITLE_MAP[ModalType.Delete];
+                break;
+
+            default:
+                dialogTitle = 'Not Supported';
+                break;
         }
 
         return (
