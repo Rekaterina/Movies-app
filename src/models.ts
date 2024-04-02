@@ -22,3 +22,9 @@ export enum Genre {
     Adventure = 'Adventure',
     Mystery = 'Mystery',
 }
+
+export enum ModalType {
+    Edit = 'Edit',
+    Delete = 'Delete',
+    Add = 'Add',
+}
