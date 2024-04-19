@@ -1,10 +1,6 @@
 import { ChangeEvent, Component } from 'react';
 import './SortControl.css';
-
-export enum SortOption {
-    Title = 'Title',
-    ReleaseDate = 'Release Date',
-}
+import { SortOption } from '../../models';
 
 interface SortControlState {
     sorting: SortOption;

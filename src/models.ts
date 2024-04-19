@@ -28,3 +28,8 @@ export enum ModalType {
     Delete = 'Delete',
     Add = 'Add',
 }
+
+export enum SortOption {
+    Title = 'Title',
+    ReleaseDate = 'Release Date',
+}

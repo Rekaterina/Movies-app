@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import SortControl, { SortOption } from './SortControl';
+import SortControl from './SortControl';
+import { SortOption } from '../../models';
 
 test('component renders the sorting option equal to initial value passed in props', () => {
     render(<SortControl selectedSorting={SortOption.Title} onSelect={jest.fn()} />);
