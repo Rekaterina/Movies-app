@@ -24,7 +24,6 @@ export default class SearchForm extends React.Component<SearchFormProps, SearchF
 
     handleSearch = () => {
         this.props.onSearch(this.state.query);
-        this.setState({ query: '' });
     };
 
     handleKeyDown = (event: React.KeyboardEvent) => {

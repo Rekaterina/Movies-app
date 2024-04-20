@@ -9,6 +9,7 @@ import GenreSelect from '../GenreSelect/GenreSelect';
 import MovieTile from '../MovieTile/MovieTile';
 import { getSortedAndFilteredMovies } from '../../helpers';
 import './MovieListPage.css';
+import { SORT_OPTION_TO_MOVIE_FIELD_MAP } from '../../constants';
 
 function MovieListPage() {
     const genres = Object.values(Genre);
@@ -25,14 +26,22 @@ function MovieListPage() {
         axios
             .get('http://localhost:4000/movies', {
                 params: {
-                    sortBy: selectedSorting.toLowerCase(),
-                    filter: selectedGenre === Genre.All ? '' : selectedGenre.toLowerCase(),
-                    search: query.toLowerCase(),
+                    search: query.toLowerCase() || undefined,
+                    searchBy: 'title',
+                    filter: selectedGenre === Genre.All ? undefined : selectedGenre.toLowerCase(),
+                    sortBy: SORT_OPTION_TO_MOVIE_FIELD_MAP[selectedSorting],
+                    sortOrder: 'asc',
+                    limit: 12,
                 },
                 cancelToken: source.token,
             })
             .then((response: { data: { data: Movie[] } }) => {
-                setMovies(response.data.data);
+                const movies = response.data.data.map(movie => ({
+                    ...movie,
+                    // img url from api is not working
+                    poster_path: 'https://i.ibb.co/7bqBL2c/poster.jpg',
+                }));
+                setMovies(movies);
             })
             .catch((error: any) => {
                 if (axios.isCancel(error)) {
@@ -53,19 +62,20 @@ function MovieListPage() {
 
     const onSelectGenre = (genre: Genre) => {
         setSelectedGenre(genre);
+        // for test data witout api
         // const filteredMovies = getSortedAndFilteredMovies(movies, selectedSorting, genre);
         // setMovies(filteredMovies);
     };
 
     const onSelectSorting = (sortingOption: SortOption) => {
         setSelectedSorting(sortingOption);
+        // for test data witout api
         // const sortedMovies = getSortedAndFilteredMovies(movies, sortingOption, selectedGenre);
         // setMovies(sortedMovies);
     };
 
     const onSelectMovie = (movieId: number) => {
         setSelectedMovieId(movieId);
-        console.log('Selected movie id is ' + movieId);
     };
 
     const getSelectedMovieById = (movieId: number) => {
