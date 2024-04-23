@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import SortControl, { SortOption } from './SortControl';
+import SortControl from './SortControl';
 import { action } from '@storybook/addon-actions';
+import { SortOption } from '../../models';
 
 const meta = {
     title: 'Components/Sort Control',

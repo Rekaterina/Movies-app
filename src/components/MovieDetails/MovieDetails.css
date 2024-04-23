@@ -1,7 +1,7 @@
 .movie-details {
     display: flex;
     width: 100%;
-    padding: 30px 60px;
+    padding: 30px;
     background-color: #232323;
 
     .image {

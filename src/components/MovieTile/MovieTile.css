@@ -3,6 +3,7 @@
     flex-direction: column;
     width: 322px;
     background-color: #232323;
+    cursor: pointer;
 
     .image {
         width: 100%;
