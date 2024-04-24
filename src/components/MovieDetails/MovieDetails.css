@@ -1,3 +1,17 @@
+.movie-detail-container {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+
+.back {
+    width: 45px;
+    color: #f65261;
+    font-size: 40px;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
 .movie-details {
     display: flex;
     width: 100%;
@@ -10,6 +24,7 @@
     }
 
     .details {
+        width: 697px;
         margin-left: 60px;
     }
 
@@ -21,6 +36,7 @@
     }
 
     .title {
+        max-width: 600px;
         margin-right: 25px;
         font-size: 40px;
         font-weight: 300;

@@ -30,7 +30,7 @@ describe('MovieTile', () => {
 
     it('renders movie genres', () => {
         render(<MovieTile {...mockedProps} />);
-        expect(screen.getByText('Crime, Comedy')).toBeTruthy();
+        expect(screen.getByText('crime, comedy')).toBeTruthy();
     });
 
     it('renders movie year', () => {

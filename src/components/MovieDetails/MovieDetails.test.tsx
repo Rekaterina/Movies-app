@@ -1,6 +1,7 @@
 import { Genre, Movie } from '../../models';
-import MovieDetails, { MovieDetailsProps } from './MovieDetails';
+import MovieDetails from './MovieDetails';
 import { render, cleanup, screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 afterEach(cleanup);
 
@@ -15,47 +16,67 @@ const mockedMovie: Movie = {
     genres: [Genre.Crime, Genre.Comedy],
 };
 
-const mockedProps: MovieDetailsProps = {
-    movie: mockedMovie,
-};
-
 describe('MovieDetails', () => {
     it('renders movie title', () => {
-        render(<MovieDetails {...mockedProps} />);
-        expect(screen.getByText('Test movie')).toBeTruthy();
+        render(
+            <Router>
+                <MovieDetails movie={mockedMovie} />
+            </Router>,
+        );
+        expect(screen.getByText('Test movie')).toBeInTheDocument();
     });
 
     it('renders movie rating', () => {
-        render(<MovieDetails {...mockedProps} />);
-        expect(screen.getByText('8')).toBeTruthy();
+        render(
+            <Router>
+                <MovieDetails movie={mockedMovie} />
+            </Router>,
+        );
+        expect(screen.getByText('8')).toBeInTheDocument();
     });
 
     it('renders movie genres', () => {
-        render(<MovieDetails {...mockedProps} />);
-        expect(screen.getByText('Crime, Comedy')).toBeTruthy();
+        render(
+            <Router>
+                <MovieDetails movie={mockedMovie} />
+            </Router>,
+        );
+        expect(screen.getByText('crime, comedy')).toBeInTheDocument();
     });
 
     it('renders movie overview', () => {
-        render(<MovieDetails {...mockedProps} />);
-        expect(screen.getByText('Test overview')).toBeTruthy();
+        render(
+            <Router>
+                <MovieDetails movie={mockedMovie} />
+            </Router>,
+        );
+        expect(screen.getByText('Test overview')).toBeInTheDocument();
     });
 
     it('renders movie duration', () => {
-        render(<MovieDetails {...mockedProps} />);
-        expect(screen.getByText('2h 2min')).toBeTruthy();
+        render(
+            <Router>
+                <MovieDetails movie={mockedMovie} />
+            </Router>,
+        );
+        expect(screen.getByText('2h 2min')).toBeInTheDocument();
     });
 
     it('renders movie year', () => {
-        render(<MovieDetails {...mockedProps} />);
-        expect(screen.getByText('2016')).toBeTruthy();
+        render(
+            <Router>
+                <MovieDetails movie={mockedMovie} />
+            </Router>,
+        );
+        expect(screen.getByText('2016')).toBeInTheDocument();
     });
 
     it('renders "No movie details" when there is no movie', () => {
-        const noMovieProps: MovieDetailsProps = {
-            movie: undefined,
-        };
-
-        render(<MovieDetails {...noMovieProps} />);
-        expect(screen.getByText('No Movie Details')).toBeTruthy();
+        render(
+            <Router>
+                <MovieDetails movie={undefined} />
+            </Router>,
+        );
+        expect(screen.getByText('No Movie Details')).toBeInTheDocument();
     });
 });
