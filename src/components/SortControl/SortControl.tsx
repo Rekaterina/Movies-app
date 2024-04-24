@@ -27,8 +27,8 @@ export default class SortControl extends Component<SortControlProps, SortControl
     render() {
         return (
             <div className="sort-control">
-                <label htmlFor="sort" className="label">
-                    Sort by:
+                <label htmlFor="sort" className="sort-control-label">
+                    Sort by
                 </label>
                 <select id="sort" value={this.state.sorting} onChange={this.updateSelectedSorting}>
                     <option value={SortOption.ReleaseDate}>{SortOption.ReleaseDate}</option>

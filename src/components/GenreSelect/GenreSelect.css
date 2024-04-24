@@ -1,5 +1,20 @@
 .genre {
-    button {
-        text-transform: uppercase;
+    padding-bottom: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: inherit;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    border: none;
+
+    &:hover {
+        color: #979797;
     }
+}
+
+.active {
+    border-bottom: 2px solid #f65261;
 }
