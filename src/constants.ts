@@ -10,3 +10,5 @@ export const SORT_OPTION_TO_MOVIE_FIELD_MAP = {
     [SortOption.ReleaseDate]: SortField.ReleaseDate,
     [SortOption.Title]: SortField.Title,
 };
+
+export const API_PATH = 'http://localhost:4000/movies';

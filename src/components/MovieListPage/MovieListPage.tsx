@@ -7,7 +7,7 @@ import GenreSelect from '../GenreSelect/GenreSelect';
 import MovieTile from '../MovieTile/MovieTile';
 import { getSortedAndFilteredMovies } from '../../helpers';
 import './MovieListPage.css';
-import { SORT_OPTION_TO_MOVIE_FIELD_MAP } from '../../constants';
+import { API_PATH, SORT_OPTION_TO_MOVIE_FIELD_MAP } from '../../constants';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 
 function MovieListPage() {
@@ -25,7 +25,7 @@ function MovieListPage() {
         const source = axios.CancelToken.source();
 
         axios
-            .get('http://localhost:4000/movies', {
+            .get(API_PATH, {
                 params: {
                     search: query.toLowerCase() || undefined,
                     searchBy: 'title',

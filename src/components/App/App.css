@@ -4,40 +4,6 @@
     background-color: #232323;
 }
 
-.modal-container {
-    position: relative;
-}
-
 .blur {
     opacity: 50%;
-}
-
-.delete-dialog {
-    padding: 30px;
-
-    .delete-movie-text {
-        padding-bottom: 40px;
-        font-size: 20px;
-        color: #fff;
-    }
-
-    .delete-movie-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 16px 57px;
-        border: 1px solid #f65261;
-        font-size: 20px;
-        font-weight: 500;
-        text-transform: uppercase;
-        color: #f65261;
-        background-color: inherit;
-        outline: none;
-        cursor: pointer;
-
-        &:hover {
-            background-color: #f65261;
-            color: #fff;
-        }
-    }
 }

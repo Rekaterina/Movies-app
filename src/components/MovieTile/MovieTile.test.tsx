@@ -1,3 +1,4 @@
+import { MemoryRouter } from 'react-router-dom';
 import { Genre, Movie } from '../../models';
 import MovieTile, { MovieTileProps } from './MovieTile';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
@@ -24,22 +25,38 @@ const mockedProps: MovieTileProps = {
 
 describe('MovieTile', () => {
     it('renders movie title', () => {
-        render(<MovieTile {...mockedProps} />);
+        render(
+            <MemoryRouter>
+                <MovieTile {...mockedProps} />
+            </MemoryRouter>,
+        );
         expect(screen.getByText('Test movie')).toBeTruthy();
     });
 
     it('renders movie genres', () => {
-        render(<MovieTile {...mockedProps} />);
+        render(
+            <MemoryRouter>
+                <MovieTile {...mockedProps} />
+            </MemoryRouter>,
+        );
         expect(screen.getByText('crime, comedy')).toBeTruthy();
     });
 
     it('renders movie year', () => {
-        render(<MovieTile {...mockedProps} />);
+        render(
+            <MemoryRouter>
+                <MovieTile {...mockedProps} />
+            </MemoryRouter>,
+        );
         expect(screen.getByText('2016')).toBeTruthy();
     });
 
     it('calls onSelect prop when clicked', () => {
-        render(<MovieTile {...mockedProps} />);
+        render(
+            <MemoryRouter>
+                <MovieTile {...mockedProps} />
+            </MemoryRouter>,
+        );
         const movieTile = screen.getByText('Test movie');
 
         fireEvent.click(movieTile);

@@ -1,10 +1,12 @@
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import './SearchForm.css';
 
 export default function SearchForm() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [query, setQuery] = React.useState(searchParams.get('query') || '');
+
+    const navigate = useNavigate();
 
     const updateQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
@@ -23,6 +25,9 @@ export default function SearchForm() {
 
     return (
         <div className="search-container">
+            <button className="add-movie-btn" onClick={() => navigate('/new')}>
+                + Add Movie
+            </button>
             <div className="search-input-label">Find your movie</div>
             <div>
                 <input
@@ -36,6 +41,7 @@ export default function SearchForm() {
                     Search
                 </button>
             </div>
+            <Outlet />
         </div>
     );
 }

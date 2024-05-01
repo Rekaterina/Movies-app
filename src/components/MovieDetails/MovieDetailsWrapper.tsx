@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import MovieDetails from '../MovieDetails/MovieDetails';
 import { useEffect, useState } from 'react';
+import { API_PATH } from '../../constants';
 
 export default function MovieDetailsWrapper() {
     const { movieId } = useParams();
@@ -10,7 +11,7 @@ export default function MovieDetailsWrapper() {
     useEffect(() => {
         const source = axios.CancelToken.source();
         axios
-            .get(`http://localhost:4000/movies/${movieId}`, {
+            .get(`${API_PATH}/${movieId}`, {
                 cancelToken: source.token,
             })
             .then(response => {

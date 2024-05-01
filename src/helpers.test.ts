@@ -1,4 +1,4 @@
-import { getSortedAndFilteredMovies } from './helpers';
+import { capitalizeFirstLetter, getSortedAndFilteredMovies } from './helpers';
 import { Genre, Movie, SortOption } from './models';
 
 describe('getSortedAndFilteredMovies', () => {
@@ -24,5 +24,13 @@ describe('getSortedAndFilteredMovies', () => {
         expect(sortedAndFilteredMovies).toEqual([
             { title: 'The Shining', release_date: '1980-05-23', genres: [Genre.Horror] },
         ]);
+    });
+});
+
+describe('capitalizeFirstLetter', () => {
+    test('should capitalize the first letter and make the rest of the word lowercase', () => {
+        expect(capitalizeFirstLetter('hello')).toBe('Hello');
+        expect(capitalizeFirstLetter('WORLD')).toBe('World');
+        expect(capitalizeFirstLetter('JaVaScRiPt')).toBe('Javascript');
     });
 });
