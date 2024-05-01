@@ -1,9 +1,79 @@
 .movie-tile {
     display: flex;
     flex-direction: column;
+    position: relative;
     width: 322px;
     background-color: #232323;
     cursor: pointer;
+
+    &:hover {
+        .item-menu {
+            visibility: visible;
+        }
+    }
+
+    .item-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 2%;
+        left: 85%;
+        width: 36px;
+        height: 36px;
+        background-color: #2a202d;
+        border-radius: 50%;
+        visibility: hidden;
+
+        .dot {
+            width: 4px;
+            height: 4px;
+            margin-bottom: 2px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+    }
+
+    .menu-dropdown {
+        display: flex;
+        flex-direction: column;
+        width: 150px;
+        position: absolute;
+        top: 2%;
+        left: 50%;
+        background-color: #232323ea;
+
+        .menu-option {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+
+            &:hover {
+                background-color: #f65261;
+            }
+        }
+
+        .menu-close-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: flex-end;
+            width: 20px;
+            height: 20px;
+            border: none;
+            padding: 0;
+            outline: none;
+            background-color: inherit;
+            color: #ffffff;
+            cursor: pointer;
+
+            span {
+                font-size: 20px;
+            }
+        }
+    }
 
     .image {
         width: 100%;

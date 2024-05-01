@@ -15,16 +15,13 @@ export interface Movie {
 
 export enum Genre {
     All = 'All',
-    Action = 'Action',
-    Adventure = 'Adventure',
-    Comedy = 'Comedy',
-    Crime = 'Crime',
-    Documentary = 'Documentary',
-    Drama = 'Drama',
-    Family = 'Family',
-    Horror = 'Horror',
-    Music = 'Music',
-    Mystery = 'Mystery',
+    Adventure = 'adventure',
+    Comedy = 'comedy',
+    Crime = 'crime',
+    Documentary = 'documentary',
+    Drama = 'drama',
+    Horror = 'horror',
+    Mystery = 'mystery',
 }
 
 export enum ModalType {
@@ -34,8 +31,8 @@ export enum ModalType {
 }
 
 export enum SortOption {
-    Title = 'Title',
-    ReleaseDate = 'Release Date',
+    Title = 'title',
+    ReleaseDate = 'release date',
 }
 
 export enum SortField {

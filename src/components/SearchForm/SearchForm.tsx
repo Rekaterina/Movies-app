@@ -1,51 +1,47 @@
 import React from 'react';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import './SearchForm.css';
 
-export interface SearchFormProps {
-    initialQuery: string;
-    onSearch: (query: string) => void;
-}
+export default function SearchForm() {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [query, setQuery] = React.useState(searchParams.get('query') || '');
 
-interface SearchFormState {
-    query: string;
-}
+    const navigate = useNavigate();
 
-export default class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
-    constructor(props: SearchFormProps) {
-        super(props);
-        this.state = {
-            query: this.props.initialQuery || '',
-        };
-    }
-
-    updateQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ query: event.target.value });
+    const updateQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(event.target.value);
     };
 
-    handleSearch = () => {
-        this.props.onSearch(this.state.query);
+    const handleSearch = () => {
+        searchParams.set('query', query);
+        setSearchParams(searchParams);
     };
 
-    handleKeyDown = (event: React.KeyboardEvent) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            this.handleSearch();
+            handleSearch();
         }
     };
 
-    render() {
-        return (
-            <div className="search-form">
+    return (
+        <div className="search-container">
+            <button className="add-movie-btn" onClick={() => navigate('/new')}>
+                + Add Movie
+            </button>
+            <div className="search-input-label">Find your movie</div>
+            <div>
                 <input
                     className="search-input"
-                    value={this.state.query}
-                    onChange={this.updateQuery}
-                    onKeyDown={this.handleKeyDown}
+                    value={query}
+                    onChange={updateQuery}
+                    onKeyDown={handleKeyDown}
                     placeholder="What do you want to watch?"
                 />
-                <button className="btn-search" onClick={this.handleSearch}>
+                <button className="btn-search" onClick={handleSearch}>
                     Search
                 </button>
             </div>
-        );
-    }
+            <Outlet />
+        </div>
+    );
 }

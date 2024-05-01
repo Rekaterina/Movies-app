@@ -11,11 +11,11 @@ export interface GenreSelectProps {
 export default class GenreSelect extends Component<GenreSelectProps> {
     render() {
         return (
-            <div className="genre">
+            <div>
                 {this.props.genres.map(genre => (
                     <button
+                        className={`genre ${genre === this.props.selectedGenre ? 'active' : ''}`}
                         key={genre}
-                        style={genre === this.props.selectedGenre ? { color: 'blue' } : {}}
                         onClick={() => this.props.onSelect(genre)}
                     >
                         {genre}
