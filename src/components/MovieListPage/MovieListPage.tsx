@@ -1,25 +1,26 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Genre, Movie, SortOption } from '../../models';
-import { movies } from '../../testData';
 import SortControl from '../SortControl/SortControl';
 import GenreSelect from '../GenreSelect/GenreSelect';
 import MovieTile from '../MovieTile/MovieTile';
-import { getSortedAndFilteredMovies } from '../../helpers';
-import './MovieListPage.css';
 import { API_PATH, SORT_OPTION_TO_MOVIE_FIELD_MAP } from '../../constants';
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import styles from './MovieListPage.module.css';
 
-function MovieListPage() {
-    const navigate = useNavigate();
+export function MovieListPage({ initialMovies }: { initialMovies: Movie[] }) {
+    const router = useRouter();
     const genres = Object.values(Genre);
 
-    const [searchParams] = useSearchParams();
-    const query = searchParams.get('query') || '';
-    const selectedGenre = (searchParams.get('genre') as Genre) || Genre.All;
-    const selectedSorting = (searchParams.get('sortBy') as SortOption) || SortOption.ReleaseDate;
+    const query = router.query.query || '';
+    const selectedGenre = (router.query.genre as Genre) || Genre.All;
+    const selectedSorting = (router.query.sortBy as SortOption) || SortOption.ReleaseDate;
 
-    const [movieList, setMovies] = useState(getSortedAndFilteredMovies(movies));
+    const [movieList, setMovies] = useState(initialMovies);
+
+    const handleNavigate = (url: string) => {
+        router.push(url);
+    };
 
     useEffect(() => {
         const source = axios.CancelToken.source();
@@ -27,7 +28,7 @@ function MovieListPage() {
         axios
             .get(API_PATH, {
                 params: {
-                    search: query.toLowerCase() || undefined,
+                    search: (query as string).toLowerCase() || undefined,
                     searchBy: 'title',
                     filter: selectedGenre === Genre.All ? undefined : selectedGenre.toLowerCase(),
                     sortBy: SORT_OPTION_TO_MOVIE_FIELD_MAP[selectedSorting],
@@ -54,38 +55,37 @@ function MovieListPage() {
 
     const onSelectGenre = (genre: Genre) => {
         if (genre === Genre.All) {
-            searchParams.delete('genre');
+            const { genre: _, ...newQuery } = router.query;
+            const params = Object.fromEntries(Object.entries(newQuery).map(([k, v]) => [k, String(v)]));
+            handleNavigate('?' + new URLSearchParams(params).toString());
         } else {
-            searchParams.set('genre', genre);
+            const newQuery = { ...router.query, genre };
+            const params = Object.fromEntries(Object.entries(newQuery).map(([k, v]) => [k, String(v)]));
+            handleNavigate('?' + new URLSearchParams(params).toString());
         }
-        navigate('?' + searchParams.toString());
     };
 
     const onSelectSorting = (sortingOption: SortOption) => {
-        searchParams.set('sortBy', sortingOption);
-        navigate('?' + searchParams.toString());
+        const newQuery = { ...router.query, sortBy: sortingOption };
+        handleNavigate('/?' + new URLSearchParams(newQuery).toString());
     };
 
     const onSelectMovie = (movieId: number) => {
-        navigate(`/${movieId}?${searchParams.toString()}`);
+        const newQuery = { ...router.query, id: String(movieId) };
+        handleNavigate('/?' + new URLSearchParams(newQuery).toString());
     };
 
     return (
-        <>
-            <Outlet />
-            <div className="content">
-                <div className="control-panel">
-                    <GenreSelect genres={genres} selectedGenre={selectedGenre} onSelect={onSelectGenre} />
-                    <SortControl selectedSorting={selectedSorting} onSelect={onSelectSorting} />
-                </div>
-                <div className="movie-list">
-                    {movieList.map(movie => (
-                        <MovieTile movie={movie} key={movie.id} onSelect={onSelectMovie} />
-                    ))}
-                </div>
+        <div className={styles.content}>
+            <div className={styles['control-panel']}>
+                <GenreSelect genres={genres} selectedGenre={selectedGenre} onSelect={onSelectGenre} />
+                <SortControl selectedSorting={selectedSorting} onSelect={onSelectSorting} />
             </div>
-        </>
+            <div className={styles['movie-list']}>
+                {movieList.map((movie: Movie) => (
+                    <MovieTile movie={movie} key={movie.id} onSelect={onSelectMovie} />
+                ))}
+            </div>
+        </div>
     );
 }
-
-export default MovieListPage;

@@ -1,3 +1,7 @@
+.genre-container {
+    display: flex;
+}
+
 .genre {
     padding-bottom: 10px;
     margin-right: 10px;

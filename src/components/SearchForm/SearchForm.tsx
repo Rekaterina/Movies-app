@@ -1,47 +1,37 @@
 import React from 'react';
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import './SearchForm.css';
+import styles from './SearchForm.module.css';
+import { useRouter } from 'next/router';
 
 export default function SearchForm() {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [query, setQuery] = React.useState(searchParams.get('query') || '');
-
-    const navigate = useNavigate();
+    const router = useRouter();
+    const [query, setQuery] = React.useState(router.query.query || '');
 
     const updateQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
     };
 
-    const handleSearch = () => {
-        searchParams.set('query', query);
-        setSearchParams(searchParams);
-    };
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            handleSearch();
+    const handleSearch = (event: React.FormEvent) => {
+        event.preventDefault();
+        if (query) {
+            router.push(`/?query=${query}`);
         }
     };
 
     return (
-        <div className="search-container">
-            <button className="add-movie-btn" onClick={() => navigate('/new')}>
-                + Add Movie
-            </button>
-            <div className="search-input-label">Find your movie</div>
-            <div>
+        <div className={styles['search-container']}>
+            <div className={styles['search-input-label']}>Find your movie</div>
+            <form method="get" onSubmit={handleSearch}>
                 <input
-                    className="search-input"
+                    className={styles['search-input']}
                     value={query}
                     onChange={updateQuery}
-                    onKeyDown={handleKeyDown}
                     placeholder="What do you want to watch?"
+                    name="query"
                 />
-                <button className="btn-search" onClick={handleSearch}>
+                <button className={styles['btn-search']} type="submit">
                     Search
                 </button>
-            </div>
-            <Outlet />
+            </form>
         </div>
     );
 }

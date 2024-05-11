@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import './GenreSelect.css';
+import styles from './GenreSelect.module.css';
 import { Genre } from '../../models';
 
 export interface GenreSelectProps {
@@ -11,15 +11,17 @@ export interface GenreSelectProps {
 export default class GenreSelect extends Component<GenreSelectProps> {
     render() {
         return (
-            <div>
+            <div className={`${styles['genre-container']}`}>
                 {this.props.genres.map(genre => (
-                    <button
-                        className={`genre ${genre === this.props.selectedGenre ? 'active' : ''}`}
-                        key={genre}
-                        onClick={() => this.props.onSelect(genre)}
-                    >
-                        {genre}
-                    </button>
+                    <form action="/" method="get" key={genre}>
+                        <input type="hidden" name="genre" value={genre} />
+                        <button
+                            type="submit"
+                            className={`${styles.genre} ${genre === this.props.selectedGenre ? styles.active : ''}`}
+                        >
+                            {genre}
+                        </button>
+                    </form>
                 ))}
             </div>
         );
