@@ -14,7 +14,9 @@
         color: #f65261;
 
         span {
-            margin-bottom: 13px;
+            text-transform: lowercase;
+            font-weight: 400;
+            font-size: 14px;
         }
 
         input {

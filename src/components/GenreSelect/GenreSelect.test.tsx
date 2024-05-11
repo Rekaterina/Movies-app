@@ -16,7 +16,7 @@ test('component highlights a selected genre passed in props', () => {
     render(<GenreSelect genres={genres} selectedGenre={Genre.All} onSelect={jest.fn()} />);
 
     const button = screen.getByRole('button', { name: Genre.All });
-    expect(button).toHaveStyle({ color: 'blue' });
+    expect(button).toHaveClass('active');
 });
 
 test('after a click event on a genre button component calls "onChange" callback and passes correct genre in arguments', () => {

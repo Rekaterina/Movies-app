@@ -1,51 +1,37 @@
 import React from 'react';
-import './SearchForm.css';
+import styles from './SearchForm.module.css';
+import { useRouter } from 'next/router';
 
-export interface SearchFormProps {
-    initialQuery: string;
-    onSearch: (query: string) => void;
-}
+export default function SearchForm() {
+    const router = useRouter();
+    const [query, setQuery] = React.useState(router.query.query || '');
 
-interface SearchFormState {
-    query: string;
-}
-
-export default class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
-    constructor(props: SearchFormProps) {
-        super(props);
-        this.state = {
-            query: this.props.initialQuery || '',
-        };
-    }
-
-    updateQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ query: event.target.value });
+    const updateQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(event.target.value);
     };
 
-    handleSearch = () => {
-        this.props.onSearch(this.state.query);
-    };
-
-    handleKeyDown = (event: React.KeyboardEvent) => {
-        if (event.key === 'Enter') {
-            this.handleSearch();
+    const handleSearch = (event: React.FormEvent) => {
+        event.preventDefault();
+        if (query) {
+            router.push(`/?query=${query}`);
         }
     };
 
-    render() {
-        return (
-            <div className="search-form">
+    return (
+        <div className={styles['search-container']}>
+            <div className={styles['search-input-label']}>Find your movie</div>
+            <form method="get" onSubmit={handleSearch}>
                 <input
-                    className="search-input"
-                    value={this.state.query}
-                    onChange={this.updateQuery}
-                    onKeyDown={this.handleKeyDown}
+                    className={styles['search-input']}
+                    value={query}
+                    onChange={updateQuery}
                     placeholder="What do you want to watch?"
+                    name="query"
                 />
-                <button className="btn-search" onClick={this.handleSearch}>
+                <button className={styles['btn-search']} type="submit">
                     Search
                 </button>
-            </div>
-        );
-    }
+            </form>
+        </div>
+    );
 }

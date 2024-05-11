@@ -1,0 +1,17 @@
+.content {
+    padding: 0 56px;
+    border-top: 10px solid #555555;
+}
+
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 56px;
+    padding-bottom: 50px;
+}
+
+.control-panel {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+}

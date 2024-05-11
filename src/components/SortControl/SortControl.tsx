@@ -1,5 +1,5 @@
 import { ChangeEvent, Component } from 'react';
-import './SortControl.css';
+import styles from './SortControl.module.css';
 import { SortOption } from '../../models';
 
 interface SortControlState {
@@ -26,15 +26,26 @@ export default class SortControl extends Component<SortControlProps, SortControl
 
     render() {
         return (
-            <div className="sort-control">
-                <label htmlFor="sort" className="label">
-                    Sort by:
+            <form action="/" method="get" className={styles['sort-control']}>
+                <label htmlFor="sortBy" className={styles['sort-control-label']}>
+                    Sort by
                 </label>
-                <select id="sort" value={this.state.sorting} onChange={this.updateSelectedSorting}>
-                    <option value={SortOption.ReleaseDate}>{SortOption.ReleaseDate}</option>
-                    <option value={SortOption.Title}>{SortOption.Title}</option>
+                <select
+                    className={styles['sort-control-select']}
+                    id="sortBy"
+                    name="sortBy"
+                    value={this.state.sorting}
+                    onChange={this.updateSelectedSorting}
+                >
+                    <option className={styles['sort-control-option']} value={SortOption.ReleaseDate}>
+                        {SortOption.ReleaseDate}
+                    </option>
+                    <option className={styles['sort-control-option']} value={SortOption.Title}>
+                        {SortOption.Title}
+                    </option>
                 </select>
-            </div>
+                <input type="submit" value="Sort" />
+            </form>
         );
     }
 }
